@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cameroon Tours Booking System</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+    }
+
+    /* ===== HEADER & NAVIGATION ===== */
+    header {
+      background: #004b8d;
+      color: white;
+      padding: 15px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 22px;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    /* ===== HERO SECTION ===== */
+    .hero {
+      background-color: #003b6f;
+      color: white;
+      text-align: center;
+      padding: 80px 20px;
+    }
+
+    .hero h2 {
+      margin: 0 0 10px;
+      font-size: 28px;
+    }
+
+    .hero p {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    /* ===== SEARCH & TOURS ===== */
+    .container {
+      width: 90%;
+      margin: auto;
+      margin-top: 20px;
+    }
+
+    .search-bar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .search-bar input,
+    .search-bar select {
+      padding: 10px;
+      flex: 1;
+    }
+
+    .tours-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .tour-card {
+      background: white;
+      padding: 15px;
+      border-radius: 6px;
+      box-shadow: 0px 0px 5px #aaa;
+    }
+
+    .tour-card img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+
+    .btn {
+      width: 100%;
+      background: #004b8d;
+      color: white;
+      padding: 10px;
+      border: none;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    .btn:hover {
+      background: #003b6f;
+    }
+
+    /* ===== MODAL ===== */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: white;
+      width: 350px;
+      padding: 20px;
+      border-radius: 6px;
+      position: relative;
+    }
+
+    .close {
+      position: absolute;
+      right: 10px;
+      top: 5px;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 12px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+
+    .success-msg {
+      color: green;
+      text-align: center;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    /* ===== ABOUT & CONTACT ===== */
+    .about,
+    .contact {
+      background: white;
+      margin: 30px auto;
+      padding: 20px;
+      width: 90%;
+      border-radius: 6px;
+      box-shadow: 0px 0px 5px #bbb;
+    }
+
+    /* ===== ADMIN TABLE ===== */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th,
+    td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: center;
+    }
+
+    th {
+      background: #004b8d;
+      color: white;
+    }
+
+    .cancel-icon {
+      font-size: 28px;
+      color: red;
+      cursor: pointer;
+    }
+
+    .cancel-icon:hover {
+      color: #cc0000;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: #004b8d;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      margin-top: 20px;
+    }
+
+    footer a {
+      color: white;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER & NAVIGATION -->
+  <header>
+    <h1>Cameroon Travel & Tours</h1>
+    <nav>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#tours">Tours</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="#admin">Admin</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <h2>Explore Cameroon With Us</h2>
+    <p>Discover beautiful tourist destinations and book your next trip easily.</p>
+  </section>
+
+  <!-- SEARCH & TOURS -->
+  <div class="container" id="tours">
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Search tour e.g. Kribi, Limbe, Bamenda...">
+      <select id="regionFilter">
+        <option value="">All Regions</option>
+        <option>South</option>
+        <option>West</option>
+        <option>North-West</option>
+        <option>South-West</option>
+        <option>Centre</option>
+      </select>
+    </div>
+    <div id="tours-grid" class="tours-grid"></div>
+  </div>
+
+  <!-- BOOKING MODAL -->
+  <div id="bookingModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Book Tour</h2>
+      <form id="bookingForm">
+        <h3 id="tourTitle"></h3>
+        <p id="tourPrice"></p>
+        <p id="tourDescription"></p>
+        <label>Full Name</label>
+        <input type="text" id="customerName" required>
+        <label>Phone (WhatsApp)</label>
+        <input type="tel" id="customerPhone" required>
+        <label>Email</label>
+        <input type="email" id="customerEmail" required>
+        <label>Travel Date</label>
+        <input type="date" id="travelDate" required>
+        <label>Number of People</label>
+        <input type="number" id="people" min="1" value="1" required>
+        <p>Total Price: <span id="totalPrice">0</span> FCFA</p>
+        <button type="submit" class="btn">Submit Booking</button>
+      </form>
+      <p id="confirmationMsg" class="success-msg"></p>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about" class="about">
+    <h2>About This Project</h2>
+    <p>
+      I designed this website to help Cameroonians book their tours more quickly and easily.
+      This project aims to simplify travel planning and provide a user-friendly experience for anyone
+      interested in exploring Cameroon. This website was created as part of my HND Level 200 project.
+    </p>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="contact">
+    <h2>Contact Us</h2>
+    <p>Email: info@cameroontours.cm</p>
+    <p>Phone: +237 653504903</p>
+  </section>
+
+  <!-- ADMIN -->
+  <section id="admin" class="contact">
+    <h2>Admin - Bookings</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Tour</th>
+          <th>Name</th>
+          <th>Phone</th>
+          <th>Email</th>
+          <th>Date</th>
+          <th>People</th>
+          <th>Total Price</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="bookingTable"></tbody>
+    </table>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2025 - Nguh Boris Nji | HND Level 200 | Internship Project</p>
+  </footer>
+
+  <!-- JAVASCRIPT -->
+  <script>
+    const tours = [
+      { id: 1, title: "Kribi Beach Tour", price: 15000, region: "South", image: "https://via.placeholder.com/260x160?text=Kribi", description: "Enjoy 3 days of sun, sand, and seafood." },
+      { id: 2, title: "Limbe Wildlife Tour", price: 12000, region: "South-West", image: "https://via.placeholder.com/260x160?text=Limbe", description: "See gorillas, elephants, and tropical birds." },
+      { id: 3, title: "Bamenda Highland Tour", price: 10000, region: "North-West", image: "https://via.placeholder.com/260x160?text=Bamenda", description: "Explore mountains, waterfalls, and local culture." },
+      { id: 4, title: "Yaounde City Tour", price: 8000, region: "Centre", image: "https://via.placeholder.com/260x160?text=Yaounde", description: "Visit museums, markets, and city landmarks." }
+    ];
+
+    function displayTours() {
+      const grid = document.getElementById("tours-grid");
+      grid.innerHTML = "";
+      const search = document.getElementById("searchInput").value.toLowerCase();
+      const region = document.getElementById("regionFilter").value;
+      tours.filter(t => t.title.toLowerCase().includes(search) && (region === "" || t.region === region))
+        .forEach(tour => {
+          const card = document.createElement("div");
+          card.className = "tour-card";
+          card.innerHTML = `<img src="${tour.image}" alt="${tour.title}">
+          <h3>${tour.title}</h3>
+          <p>${tour.description}</p>
+          <p>Region: ${tour.region}</p>
+          <p>Price: ${tour.price} FCFA</p>
+          <button onclick="openBooking(${tour.id})" class="btn">Book Now</button>`;
+          grid.appendChild(card);
+        });
+    }
+    displayTours();
+    document.getElementById("searchInput").addEventListener("input", displayTours);
+    document.getElementById("regionFilter").addEventListener("change", displayTours);
+
+    function openBooking(id) {
+      const modal = document.getElementById("bookingModal");
+      const tour = tours.find(t => t.id === id);
+      document.getElementById("tourTitle").textContent = tour.title;
+      document.getElementById("tourPrice").textContent = "Price: " + tour.price + " FCFA";
+      document.getElementById("tourDescription").textContent = tour.description;
+      document.getElementById("people").value = 1;
+      document.getElementById("totalPrice").textContent = tour.price;
+      modal.style.display = "flex";
+      const peopleInput = document.getElementById("people");
+      peopleInput.oninput = function () {
+        const total = tour.price * peopleInput.value;
+        document.getElementById("totalPrice").textContent = total;
+      };
+    }
+
+    document.querySelector(".close").onclick = () => {
+      document.getElementById("bookingModal").style.display = "none";
+      document.getElementById("confirmationMsg").textContent = "";
+      document.getElementById("bookingForm").reset();
+    };
+
+    document.getElementById("bookingForm").onsubmit = function (e) {
+      e.preventDefault();
+      const tourTitle = document.getElementById("tourTitle").textContent;
+      const name = document.getElementById("customerName").value;
+      const phone = document.getElementById("customerPhone").value;
+      const email = document.getElementById("customerEmail").value;
+      const date = document.getElementById("travelDate").value;
+      const people = document.getElementById("people").value;
+      const total = document.getElementById("totalPrice").textContent;
+      const bookings = JSON.parse(localStorage.getItem("bookings") || "[]");
+      bookings.push({ tourTitle, name, phone, email, date, people, total });
+      localStorage.setItem("bookings", JSON.stringify(bookings));
+      updateAdminTable();
+      document.getElementById("confirmationMsg").textContent = "Booking submitted successfully!";
+      document.getElementById("bookingForm").reset();
+    };
+
+    function updateAdminTable() {
+      const table = document.getElementById("bookingTable");
+      const bookings = JSON.parse(localStorage.getItem("bookings") || "[]");
+      table.innerHTML = "";
+      bookings.forEach((b, index) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${b.tourTitle}</td>
+          <td>${b.name}</td>
+          <td>${b.phone}</td>
+          <td>${b.email}</td>
+          <td>${b.date}</td>
+          <td>${b.people}</td>
+          <td>${b.total}</td>
+          <td><i class="fas fa-trash-alt cancel-icon" onclick="cancelBooking(${index})"></i></td>
+        `;
+        table.appendChild(row);
+      });
+    }
+
+    function cancelBooking(index) {
+      const bookings = JSON.parse(localStorage.getItem("bookings") || "[]");
+      bookings.splice(index, 1);
+      localStorage.setItem("bookings", JSON.stringify(bookings));
+      updateAdminTable();
+    }
+
+    updateAdminTable();
+  </script>
+
+</body>
+
+</html>
